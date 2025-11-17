@@ -1,0 +1,10 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="AI Self-Healing Demo Suite">
+  <test name="Amazon Tests">
+    <classes>
+      <class name="com.example.selfhealing.tests.SampleAmazonTest"/>
+      <class name="com.example.selfhealing.tests.HomePageTest"/>
+      <class name="com.example.selfhealing.tests.LoginPageTest"/>
+    </classes>
+  </test>
+</suite>
