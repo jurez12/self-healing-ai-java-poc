@@ -1,6 +1,10 @@
 package com.example.selfhealing;
 
 import java.util.regex.Matcher;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 import java.util.regex.Pattern;
 
 import com.google.genai.Client;
@@ -21,14 +25,28 @@ public class GoogleGeminiAILLM {
 	}
 
 	private static String getElementFromLLM(String logicalName, String site) {
-		Client client = Client.builder().apiKey("AIzaSyA73wgbQ0cyou6cPbRw3LwwVa2Nr202D30").build();
-		String value = "From the webpage at " + site + ", identify" + " the XPath selector that uniquely points to the "
-				+ logicalName + " of the site. Provide only the exact XPath expression of the " + logicalName
-				+ " element without any additional text, explanation, or formatting.";
-		Content userContent = Content.fromParts(Part.fromText(value));
-		GenerateContentResponse response = client.models.generateContent("gemini-2.5-flash", userContent, null);
-		System.out.println("Google-Gemini-2.5-flash Suggestion" + response.text());
-		return response.text();
+		Properties prop = new Properties();
+		try (InputStream input = new FileInputStream("config.properties")) {
+			prop.load(input);
+			// Read properties by key
+			String key = prop.getProperty("key");
+			String token1 = prop.getProperty("token1");
+			String token2 = prop.getProperty("token2");
+			String token3 = prop.getProperty("token3");
+			String token4 = prop.getProperty("token4");
+			String token5 = prop.getProperty("token5");
+
+			Client client = Client.builder().apiKey(key).build();
+			String value = token1 + site + token2 + token3 + logicalName + token4 + logicalName + token5;
+			Content userContent = Content.fromParts(Part.fromText(value));
+			GenerateContentResponse response = client.models.generateContent("gemini-2.5-flash", userContent, null);
+			System.out.println("Google-Gemini-2.5-flash Suggestion" + response.text());
+
+			return response.text();
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		return "";
 	}
 
 }

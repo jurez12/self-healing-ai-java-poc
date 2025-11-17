@@ -61,13 +61,13 @@ public class LocatorRepository {
         repo.put("Get In Touch", Arrays.asList(
                 By.id("Get-"),
                 By.cssSelector("fixed-logo-"),
-                By.xpath("//a[contains(@href,'getintouch')]")
+                By.xpath("//a[contains(@href,'getintouch-')]")
             ));
         
         repo.put("Careers", Arrays.asList(
                 By.id("Get-"),
-                By.cssSelector("careers"),
-                By.xpath("//a[contains(@href,'careerssss')]")
+                By.cssSelector("careers-"),
+                By.xpath("//a[contains(@href,'careerssss-')]")
             ));
     }
 
