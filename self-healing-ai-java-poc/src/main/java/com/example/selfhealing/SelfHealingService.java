@@ -9,13 +9,13 @@ import java.util.Map;
 
 public class SelfHealingService {
 	private WebDriver driver;
-	private AISuggester ai = new AISuggester();
 
 	public SelfHealingService(WebDriver driver) {
 		this.driver = driver;
 	}
 
 	public WebElement findElement(String logicalName, long timeoutSeconds, String site) {
+		try {
 		// 1. try healed, Get from Json if found return;
 		Map<String, Object> meta = HealedLocatorsStore.get(logicalName);
 		if (meta != null) {
@@ -34,6 +34,10 @@ public class SelfHealingService {
 			} catch (Exception ignored) {
 			}
 		}
+		}catch(Exception e) {
+			System.out.println ("Error in reading JSON");
+		}
+		
 		boolean found = false;
 		// 2. repo candidates, get local, if present save to json and return
 		List<By> candidates = LocatorRepository.candidates(logicalName);
@@ -54,9 +58,9 @@ public class SelfHealingService {
 		}
 		// 3. if not found both JSON And local, get using AI, have it as 0.8 confident 
 		try {
-			for (int i = 0; i < 3; i++) {
+			for (int i = 0; i < 5; i++) {
 				try {
-				String xpath = GoogleGeminiAILLM.aiGetXpath(logicalName, site);
+				String xpath = Google_Gemini_AI_LLM.aiGetXpath(logicalName, site);
 				// By by = parseBy(xpath);
 				WebElement e = driver.findElement(By.xpath(xpath));
 				if (e != null) {
@@ -70,23 +74,11 @@ public class SelfHealingService {
 					System.out.println("Excpetion " + e);
 				}
 			}
-/*			String html = driver.getPageSource();
-			List<AISuggester.Suggestion> sugg = ai.suggest(logicalName, html);
-			for (AISuggester.Suggestion s : sugg) {
-				By by = parseBy(s.locator);
-				WebElement e = tryFind(by, timeoutSeconds);
-				if (e != null) {
-					HealedLocatorsStore.save(logicalName, s.locator, s.confidence, s.reason, "ai");
-					System.out
-							.println("[AI-HEAL] " + logicalName + " -> " + s.locator + " (conf " + s.confidence + ")");
-					return e;
-				}
-			}
-			*/
 		} catch (Exception ex) {
 			System.out.println("Excpetion " + ex);
 		}
-		throw new NoSuchElementException("Unable to find element: " + logicalName);
+		throw new NoSuchElementException("Unable to find element in JSON/Repo/AI: " + logicalName);
+		
 	}
 
 	private WebElement tryFind(By by, long timeoutSeconds) {
