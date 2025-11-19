@@ -18,7 +18,7 @@ public class Google_Gemini_AI_LLM {
 			try {
 				return getElementFromLLM(logicalName, site);
 			} catch (Exception e) {
-				System.out.println("Failed  " + e.getMessage());
+				System.out.println("Retry Google-Gemini-2.5-flash " + e.getMessage());
 			}
 		}
 		return null;

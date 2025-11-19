@@ -67,7 +67,7 @@ public class LocatorRepository {
         repo.put("Full Name Textbox", Arrays.asList(
                 By.id("Wrong"),
                 By.cssSelector("Wrong-"),
-                By.xpath("//button[@type='submit-']")
+                By.xpath("//input[@placeholder='Full Name']")
             ));
         
         repo.put("Careers", Arrays.asList(
