@@ -67,13 +67,7 @@ public class LocatorRepository {
         repo.put("Full Name Textbox", Arrays.asList(
                 By.id("Wrong"),
                 By.cssSelector("Wrong-"),
-                By.xpath("//input[@placeholder='Full Name']")
-            ));
-        
-        repo.put("Careers", Arrays.asList(
-                By.id("Get-"),
-                By.cssSelector("careers-"),
-                By.xpath("//a[contains(@href,'careerssss-')]")
+                By.xpath("//input[@placeholder='Full Name-']")
             ));
     }
 

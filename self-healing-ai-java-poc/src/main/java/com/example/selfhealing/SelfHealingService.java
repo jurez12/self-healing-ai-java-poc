@@ -21,10 +21,10 @@ public class SelfHealingService {
 		if (meta != null) {
 			try {
 				String byStr = (String) meta.get("locator");
-				
-				By by = parseBy(byStr);
-				WebElement e = tryFind(by, timeoutSeconds);
+				System.out.println("json locator" + byStr);
+				WebElement e = driver.findElement(By.xpath(byStr));
 				if (e != null) {
+					System.out.println("Picked From Json" +byStr);
 					System.out.println(byStr + "FindElement");
 					return e;
 				} else {
