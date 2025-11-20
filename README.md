@@ -67,5 +67,6 @@
 <h2>Languages</h2>
 <p>Java 100.0%</p>
 
+<h2><B>**Release : Self-Healing Heuristic  AI 1.0** </B></h2>
 </body>
 </html>
