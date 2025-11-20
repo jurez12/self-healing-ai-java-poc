@@ -2,35 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Self-Healing AI Java POC</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            padding: 20px;
-            max-width: 800px;
-            margin: auto;
-            background-color: #f9f9f9;
-            color: #333;
-        }
-        h1, h2, h3 {
-            color: #2c3e50;
-        }
-        pre {
-            background-color: #eee;
-            padding: 10px;
-            border-left: 5px solid #3498db;
-            overflow-x: auto;
-        }
-        code {
-            background-color: #eee;
-            padding: 2px 4px;
-            font-family: Consolas, monospace;
-        }
-        ul {
-            margin-top: 0;
-        }
-    </style>
 </head>
 <body>
 
