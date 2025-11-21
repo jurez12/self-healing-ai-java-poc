@@ -12,6 +12,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class ItcPageTest extends BaseTest {
+	public static String site = "https://www.itcinfotech.com";
 
 	@Test
 	@Story("Verify Get In Touch and Full Name elements")
@@ -19,9 +20,8 @@ public class ItcPageTest extends BaseTest {
 	@Description("Checks visibility and functionality of 'Get In Touch' and 'Full Name' elements on ITC page")
 	public void verifyITCPageElements() {
 		try {
-			String site = "https://www.itcinfotech.com";
 			driver.get(site);
-			/* Acccept Cookies */
+			System.out.println("Accept Cookie");
 			if (driver.findElement(By.xpath("//a[contains(.,'Accept All')]")).isDisplayed()) {
 				driver.findElement(By.xpath("//a[contains(.,'Accept All')]")).click();
 			}

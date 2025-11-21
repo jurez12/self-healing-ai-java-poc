@@ -1,12 +1,9 @@
 package com.example.selfhealing;
 
-import java.util.regex.Matcher;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-import java.util.regex.Pattern;
-
 import com.google.genai.Client;
 import com.google.genai.types.Content;
 import com.google.genai.types.GenerateContentResponse;
@@ -35,8 +32,6 @@ public class Google_Gemini_AI_LLM {
 					.replaceAll("@LOGICAL_NAME", logicalName);
 			
 			Client client = Client.builder().apiKey(key).build();
-			//System.out.println("Result of key " + token);
-			
 			Content userContent = Content.fromParts(Part.fromText(token));
 			GenerateContentResponse response = client.models.generateContent("gemini-2.5-flash", userContent, null);
 			System.out.println("Google-Gemini-2.5-flash Suggestion" + response.text());

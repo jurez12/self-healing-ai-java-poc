@@ -21,7 +21,7 @@ public class SelfHealingService {
 		if (meta != null) {
 			try {
 				String byStr = (String) meta.get("locator");
-				System.out.println("json locator" + byStr);
+				System.out.println("JSON locator :" + byStr);
 				WebElement e = driver.findElement(By.xpath(byStr));
 				if (e != null) {
 					System.out.println("Picked From Json" +byStr);
@@ -38,23 +38,15 @@ public class SelfHealingService {
 			System.out.println ("Error in reading JSON");
 		}
 		
-		boolean found = false;
 		// 2. repo candidates, get local, if present save to json and return
 		List<By> candidates = LocatorRepository.candidates(logicalName);
 		for (By c : candidates) {
 			WebElement e = tryFind(c, timeoutSeconds);
 			if (e != null) {
-				found = true;
-				System.out.println("Picked " +c.toString());
+				System.out.println("Picked From Local Repo: " +c.toString() + " Logical Name" + logicalName);
 				HealedLocatorsStore.save(logicalName, c.toString(), 0.9, "repo-candidate", "repo");
-				System.out.println("Locator " + logicalName + " found correctly" + found);
 				return e;
 			}
-		}
-		if (found == false) {
-			System.out.println("Locator " + logicalName + " not found as mention in code " + found);
-		} else {
-			System.out.println("Locator " + logicalName + " found correctly" + found);
 		}
 		// 3. if not found both JSON And local, get using AI, have it as 0.8 confident 
 		try {
@@ -65,7 +57,7 @@ public class SelfHealingService {
 				WebElement e = driver.findElement(By.xpath(xpath));
 				if (e != null) {
 					HealedLocatorsStore.save(logicalName, xpath, 0.8, "healing", "Google-Gemini-2.5-flash");
-					System.out.println("[AI-HEAL] " + logicalName + " -> " + xpath + " (conf " + 0.80 + ")");
+					System.out.println("[AI-HEAL(LLM(GEMINI2.5)] " + logicalName + " -> " + xpath + " (conf " + 0.80 + ")");
 					return e;
 				} else {
 					continue;
@@ -90,15 +82,4 @@ public class SelfHealingService {
 		}
 	}
 
-	private By parseBy(String s) {
-		if (s.startsWith("By.id:"))
-			return By.id(s.substring("By.id:".length()));
-		if (s.startsWith("By.name:"))
-			return By.name(s.substring("By.name:".length()));
-		if (s.startsWith("By.cssSelector:"))
-			return By.cssSelector(s.substring("By.cssSelector:".length()));
-		if (s.startsWith("By.xpath:"))
-			return By.xpath(s.substring("By.xpath:".length()));
-		return By.cssSelector(s);
-	}
 }
